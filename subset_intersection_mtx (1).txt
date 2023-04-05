@@ -1,0 +1,36 @@
+def subset_intersection(n, k, l, m):
+    'Returns a matrix comparing k subsets vs l subsets of an n element set. If an entry has a value of 1 then the corresponding subsets share m elements in common.'
+    'Input: n - number of elements in set, k - size of subsets, l - size of subsets, m - size of intersection'
+    'Output: A - intersection mtx, each row and collumn represent a different subset of size k or l'
+    
+    #define collection of subsets
+    R = Subsets(n, k)
+    S = Subsets(n, l)
+
+    #create matrix with appropriate size
+    A = matrix(ZZ, binomial(n,k), binomial(n,l))
+
+    #create empty lists and append subsets
+    r = []
+    s = []
+
+    for i in R:
+        r.append(i)
+
+    for j in S:
+        s.append(j)
+
+    #check for size of intersection and adjust value of A if necessary
+    for i in range(len(r)):
+        for j in range(len(s)):
+            if (r[i].intersection(s[j])).cardinality() == m:
+                A[i,j]=1
+                
+    return(A)
+
+def elem_divisors_abbr(A):
+    #use sage method to find divisors
+    divs = A.elementary_divisors()
+    #count how many of each divisor
+    D = dict((i, divs.count(i)) for i in divs)
+    return(D)
